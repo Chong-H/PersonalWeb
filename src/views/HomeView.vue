@@ -4,7 +4,7 @@
   <div class="profile-home">
     <h1>罗鹏程</h1>
     <h2>软件工程学生，热爱用知识改变生活。</h2>
-    <img class="avatar" src="@/assets/headProfile.png" alt="头像" />
+    <img class="avatar" src="@/assets/headProfile.jpg" alt="头像" />
 
     <div class="skills">
       <span>Vue</span>
