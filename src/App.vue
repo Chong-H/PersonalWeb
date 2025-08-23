@@ -3,11 +3,17 @@
     <div class="common-layout">
       <el-container>
         <el-header>
-          <el-text class="mx-1" size="large" type="primary"> PengCheng Luo </el-text>
+          <el-text class="main-title" size="large" type="primary">
+            PengCheng Luo's Personal Web
+          </el-text>
         </el-header>
 
         <el-container>
-          <el-aside width="200px">
+          <!-- 悬浮按钮 -->
+          <button class="sidebar-toggle" @click="showAside = !showAside">
+            <span>☰</span>
+          </button>
+          <el-aside v-show="showAside" width="200px">
             <el-row class="tac">
               <el-col :span="23">
                 <h5 class="mb-2 custom-title">please select</h5>
@@ -33,15 +39,13 @@
                       <el-icon><location /></el-icon>
                       <span>My Projects</span>
                     </template>
-                    <el-menu-item-group title="Group One">
-                      <el-menu-item index="1-1">item one</el-menu-item>
-                      <el-menu-item index="1-2">item two</el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item-group title="Group Two">
-                      <el-menu-item index="1-3">item three</el-menu-item>
-                    </el-menu-item-group>
-                    <el-sub-menu index="1-4">
-                      <template #title>item four</template>
+
+                    <el-sub-menu index="PersonalPro">
+                      <template #title>Personal Projects</template>
+                      <el-menu-item index="pms">pms</el-menu-item>
+                    </el-sub-menu>
+                    <el-sub-menu index="GroupPro">
+                      <template #title>Group Projects</template>
                       <el-menu-item index="1-4-1">item one</el-menu-item>
                     </el-sub-menu>
                   </el-sub-menu>
@@ -72,7 +76,13 @@
             </el-row>
           </el-aside>
 
-          <el-main>
+          <el-main
+            :style="
+              showAside
+                ? 'margin-left:200px;width:calc(100% - 200px);'
+                : 'margin-left:0;width:100%;'
+            "
+          >
             <RouterView />
           </el-main>
         </el-container>
@@ -87,6 +97,8 @@ import HelloWorld from './components/HelloWorld.vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue'
+import { ref } from 'vue'
+const showAside = ref(true)
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
@@ -100,6 +112,8 @@ const handleMenuSelect = (index: string) => {
     router.push('/')
   } else if (index === 'about') {
     router.push('/about')
+  } else if (index === 'pms') {
+    router.push('/pms')
   }
   // 其他菜单项...
 }
@@ -199,6 +213,17 @@ header {
   color: #333;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+.main-title {
+  font-size: 2rem !important;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 1px;
+  padding-bottom: 0.4em;
+  /* border-bottom: 2px solid #409eff; */
+  background: none;
+  text-shadow: none;
+  border-radius: 0;
+}
 .el-main {
   margin-left: 200px; /* 与 aside 宽度一致 */
   padding-top: 64px; /* 与 header 高度一致 */
@@ -278,5 +303,28 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+/* 悬浮按钮样式 */
+.sidebar-toggle {
+  position: fixed;
+  top: 32px;
+  left: 24px;
+  z-index: 2000;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #409eff;
+  color: #fff;
+  font-size: 2rem;
+  border: none;
+  box-shadow: 0 2px 8px rgba(64, 158, 255, 0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.sidebar-toggle:hover {
+  background: #67c23a;
 }
 </style>
