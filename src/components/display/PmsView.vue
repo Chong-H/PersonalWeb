@@ -1,7 +1,7 @@
 <template>
   <div class="project-info">
-    <h2>项目名称：密码管理系统</h2>
-    <h3>项目角色</h3>
+    <h2>ProjectName：PMS密码管理系统</h2>
+    <h3>Role项目角色</h3>
     <p>项目经理，软件开发者</p>
     <h3>技术栈</h3>
     <div class="tech-list">
@@ -17,7 +17,7 @@
       <span class="tech-tag">Ts</span>
       <span class="tech-tag">C#</span>
       <span class="tech-tag">nginx</span>
-      <span class="tech-tag">OTP(TOTP)验证码生产算法</span>
+      <span class="tech-tag">OTP(TOTP)验证码生成算法</span>
       <span class="tech-tag">2fa验证</span>
     </div>
     <h3>项目内容</h3>
@@ -29,13 +29,13 @@
       本项目也实现了2fa验证码（基于OTP算法），可以代替Google Authenticator,SafeAuth,Microsoft
       Authenticator进行身份验证。<br />
       项目部署在RK3399单板机（Ubuntu）和Intel
-      laptop（Win11）上，并使用花生壳进行内网穿透，开发端口到域名，实现外网访问。
+      laptop（Win11）上，并使用花生壳进行内网穿透，开放端口到域名，实现外网访问。
     </p>
-    <h3>CS客户端页面示例</h3>
+    <h3>CS客户端页面示例-2fa验证码生成</h3>
     <img class="image" src="@/assets/PMSPageCS.png" alt="密码管理系统界面截图" />
-    <h3>BS客户端页面示例</h3>
+    <h3>BS客户端页面示例-信道密钥生成与协商</h3>
     <img class="image" src="@/assets/PMSPageBS.png" alt="密码管理系统界面截图" />
-    <h3>BS客户端数据交流加密信道演示</h3>
+    <h3>BS客户端页面示例-加密数据交流演示</h3>
     <img class="image" src="@/assets/PMSPageBSCommunicate.png" alt="密码管理系统加密信道截图" />
   </div>
 </template>

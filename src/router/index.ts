@@ -23,6 +23,16 @@ const router = createRouter({
       name: 'pms',
       component: () => import('../components/display/PmsView.vue'),
     },
+    {
+      path: '/dcs-chain',
+      name: 'dcs-chain',
+      component: () => import('../components/display/DCSView.vue'),
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../components/display/ContactView.vue'),
+    },
   ],
 })
 

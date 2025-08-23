@@ -46,13 +46,13 @@
                     </el-sub-menu>
                     <el-sub-menu index="GroupPro">
                       <template #title>Group Projects</template>
-                      <el-menu-item index="1-4-1">item one</el-menu-item>
+                      <el-menu-item index="DCS">DCS-Chain </el-menu-item>
                     </el-sub-menu>
                   </el-sub-menu>
 
-                  <el-menu-item index="2">
+                  <el-menu-item index="Contact">
                     <el-icon><icon-menu /></el-icon>
-                    <span>Navigator Two</span>
+                    <span>Contact me</span>
                   </el-menu-item>
 
                   <el-menu-item index="3" disabled>
@@ -114,6 +114,10 @@ const handleMenuSelect = (index: string) => {
     router.push('/about')
   } else if (index === 'pms') {
     router.push('/pms')
+  } else if (index === 'DCS') {
+    router.push('/dcs-chain')
+  } else if (index === 'Contact') {
+    router.push('/contact')
   }
   // 其他菜单项...
 }
