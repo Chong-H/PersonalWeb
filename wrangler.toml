@@ -1,4 +1,5 @@
 # wrangler.toml for Cloudflare Pages
 
+name = "personalweb"
 # 输出目录
 pages_build_output_dir = "dist"
