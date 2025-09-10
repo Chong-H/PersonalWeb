@@ -14,8 +14,8 @@
       </p>
       <pre><code>base: '/PersonalWeb/',</code></pre>
       <p>
-        导致远程构建输出除了 index.html 在子文件夹 dist/PersonalWeb/，直接部署到 Cloudflare
-        导致页面元素无法访问。
+        导致远程构建输出除了 index.html ，所有文件在子文件夹 dist/PersonalWeb/，直接部署到
+        Cloudflare 导致页面元素无法访问。
       </p>
     </div>
     <div class="about-section">
@@ -48,6 +48,14 @@
         构建输出目录：
         /dist
       </code></pre>
+    </div>
+    <div class="about-section">
+      <h3>添加重定向使cf项目打开web自动定向到url/PersonalWeb</h3>
+      <p>在public目录下添加一个名为 <code>_redirects</code> 的文件，内容如下：</p>
+      <pre><code>
+        /PersonalWeb    /index.html   200
+      </code></pre>
+      <p>这样当访问根目录时会自动重定向到 /PersonalWeb，从而正确加载应用。</p>
     </div>
   </div>
 </template>
