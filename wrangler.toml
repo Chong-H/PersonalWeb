@@ -1,0 +1,15 @@
+# wrangler.toml
+
+# 你的 Worker 项目名称
+name = "personalweb"
+
+# 兼容性日期（填当前日期即可）
+compatibility_date = "2025-09-10"
+
+# 静态资源配置
+[assets]
+# 指定构建后的静态文件目录
+directory = "./dist"
+
+# 如果是单页应用（SPA），未匹配的路由都 fallback 到 index.html
+not_found_handling = "single-page-application"

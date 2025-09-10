@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
+    "build:cf": "vite build && mkdir -p dist/PersonalWeb && mv dist/assets dist/PersonalWeb/ && mv dist/index.html dist/PersonalWeb/",
     "type-check": "vue-tsc --build",
     "format": "prettier --write src/"
   },
