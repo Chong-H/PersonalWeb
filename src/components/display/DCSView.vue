@@ -33,6 +33,192 @@
     <h3>系统界面示例</h3>
     <img class="image" src="@/assets/DCSPage.png" alt="数字藏品系统界面截图" />
     -->
+    <h3>智能合约-交易记录上链（Solidity 实现）</h3>
+    <pre class="code-block">
+    <code>
+      pragma solidity ^0.4.25;
+
+contract TransactionRecord {
+
+    struct Trade {
+        uint256 transactionId;
+        uint256 collectibleId;
+        uint256 buyerId;
+        uint256 sellerId;
+        string transactionDate;
+    }
+
+    mapping(uint256 => Trade) public trades;
+
+    event TradeRecorded(
+        uint256 transactionId,
+        uint256 collectibleId,
+        uint256 buyerId,
+        uint256 sellerId,
+        string transactionDate
+    );
+
+    function recordTrade(
+        uint256 transactionId,
+        uint256 collectibleId,
+        uint256 buyerId,
+        uint256 sellerId,
+        string transactionDate
+    ) public {
+        require(trades[transactionId].transactionId == 0); // 确保不重复记录
+
+        trades[transactionId] = Trade(
+            transactionId,
+            collectibleId,
+            buyerId,
+            sellerId,
+            transactionDate
+        );
+
+        emit TradeRecorded(transactionId, collectibleId, buyerId, sellerId, transactionDate);
+    }
+
+    function getTrade(uint256 transactionId) public view returns (
+        uint256, uint256, uint256, uint256, string
+    ) {
+        Trade memory t = trades[transactionId];
+        return (
+            t.transactionId,
+            t.collectibleId,
+            t.buyerId,
+            t.sellerId,
+            t.transactionDate
+        );
+    }
+}
+
+    </code>
+    </pre>
+    <h3>服务器启动区块链（linux终端）</h3>
+    <pre class="code-block">
+    <code>
+    #!/bin/bash
+    luo@ubuntu:~/fisco$ bash nodes/127.0.0.1/start_all.sh
+    </code>
+    </pre>
+    <h3>控制区块链</h3>
+    <pre class="code-block">
+    <code>
+    #!/bin/bash
+    luo@ubuntu:~$ cd ~/fisco/console && bash start.sh
+    </code>
+    </pre>
+    <h3>后端上链服务类（JAVA）</h3>
+    <pre class="code-block" v-pre>
+    <code>
+      package edu.swjtu.azurecollection.service;
+
+import edu.swjtu.azurecollection.contract.TransactionRecord;
+import edu.swjtu.azurecollection.pojo.Transaction;
+import org.fisco.bcos.sdk.abi.datatypes.generated.tuples.generated.Tuple5;
+import org.fisco.bcos.sdk.client.Client;
+import org.fisco.bcos.sdk.model.TransactionReceipt;
+import org.fisco.bcos.sdk.transaction.model.exception.ContractException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import jakarta.annotation.PostConstruct;
+import org.fisco.bcos.sdk.crypto.keypair.CryptoKeyPair;
+
+
+import java.math.BigInteger;
+
+@Service
+public class TransactionChainService {
+
+    private final Client client;
+    private TransactionRecord transactionRecord;
+    private CryptoKeyPair cryptoKeyPair; // ✅ 添加这行
+
+    @Value("${contract.transactionRecordAddress}")
+    private String contractAddress; // 从配置文件中读取合约地址
+
+    public TransactionChainService(Client client) {
+        this.client = client;
+    }
+
+    @PostConstruct
+    public void initContract() {
+        try {
+            // 从客户端生成账户（使用默认私钥或节点私钥）
+            this.cryptoKeyPair = client.getCryptoSuite().getCryptoKeyPair();
+
+            // ✅ 正确调用 load()，传入 3 个参数
+            transactionRecord = TransactionRecord.load(contractAddress, client, cryptoKeyPair);
+
+            System.out.println("✅ 合约加载成功：" + contractAddress);
+        } catch (Exception e) {
+            System.err.println("❌ 合约加载失败: " + e.getMessage());
+        }
+    }
+
+    public void syncToBlockchain(Transaction tx) {
+        try {
+            transactionRecord.recordTrade(
+                    BigInteger.valueOf(tx.getTransactionId()),
+                    BigInteger.valueOf(tx.getCollectibleId()),
+                    BigInteger.valueOf(tx.getBuyerId()),
+                    BigInteger.valueOf(tx.getSellerId()),
+                    tx.getTransactionDate()
+            );
+            System.out.println("✅ 交易上链成功 ID: " + tx.getTransactionId());
+        } catch (Exception e) {
+            System.err.println("❌ 上链失败：" + e.getMessage());
+        }
+    }
+
+public void saveTransactionOnChain(Transaction tx) {
+    try {
+        // 验证参数大小
+        if (tx.getTransactionId() <= 0 || tx.getTransactionId() > 256) {
+            throw new IllegalArgumentException("Transaction ID must be in range 0 < id <= 256");
+        }
+        if (tx.getCollectibleId() <= 0 || tx.getCollectibleId() > 256) {
+            throw new IllegalArgumentException("Collectible ID must be in range 0 < id <= 256");
+        }
+        if (tx.getBuyerId() <= 0 || tx.getBuyerId() > 256) {
+            throw new IllegalArgumentException("Buyer ID must be in range 0 < id <= 256");
+        }
+        if (tx.getSellerId() <= 0 || tx.getSellerId() > 256) {
+            throw new IllegalArgumentException("Seller ID must be in range 0 < id <= 256  ,"+tx.getSellerId()+"is not ");
+        }
+
+        // 调用区块链合约
+        TransactionReceipt receipt = transactionRecord.recordTrade(
+                BigInteger.valueOf(tx.getTransactionId()),
+                BigInteger.valueOf(tx.getCollectibleId()),
+                BigInteger.valueOf(tx.getBuyerId()),
+                BigInteger.valueOf(tx.getSellerId()),
+                tx.getTransactionDate() // String 类型无需转换
+        );
+        System.out.println("✅ 区块链交易已记录，交易哈希: " + receipt.getTransactionHash());
+    } catch (Exception e) {
+        System.err.println("❌ 写入区块链失败: " + e.getMessage());
+    }
+}
+    public Tuple5&ltBigInteger, BigInteger, BigInteger, BigInteger, String&gt queryTransaction(BigInteger txId) {
+        try {
+            return transactionRecord.getTrade(txId);
+        } catch (ContractException e) {
+            System.err.println("❌ 查询失败：" + e.getMessage());
+            throw new RuntimeException("查询失败", e);
+        }
+    }
+}
+
+    </code>
+    </pre>
+    <h3>后端依赖项</h3>
+    <pre class="code-block">
+    <code>
+    implementation ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.1")
+    </code>
+    </pre>
   </div>
 </template>
 
@@ -102,5 +288,16 @@
   margin: 2rem auto;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.code-block {
+  background: #23272e;
+  color: #e6e6e6;
+  font-size: 0.95rem;
+  padding: 1.2rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
 }
 </style>

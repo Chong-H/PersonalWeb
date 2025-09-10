@@ -4,12 +4,11 @@
   <div class="profile-home">
     <h1>罗鹏程</h1>
     <h2>软件工程学生，热爱用知识改变生活。</h2>
-    <img class="avatar" src="@/assets/headProfile.jpg" alt="头像" />
 
     <div class="skills">
-      <span>Vue</span>
+      <!-- <span>Vue</span>
       <span>React</span>
-      <span>Node.js</span>
+      <span>Node.js</span> -->
       <!-- 更多技能 -->
     </div>
     <div class="contact">
@@ -17,18 +16,19 @@
       <a href="https://github.com/Chong-H">GitHub仓库</a>
       <!-- 更多联系方式 -->
     </div>
-    <blockquote>“体冲和以通无，应物而无累于物”</blockquote>
+    <!-- <blockquote>“体冲和以通无，应物而无累于物”</blockquote> -->
   </div>
 </template>
 
 <style scoped>
 .profile-home {
+  width: 100%;
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 0;
 }
 .profile-home h1 {
   /* font-size: 4rem;  */

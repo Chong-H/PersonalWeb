@@ -37,6 +37,263 @@
     <img class="image" src="@/assets/PMSPageBS.png" alt="密码管理系统界面截图" />
     <h3>BS客户端页面示例-加密数据交流演示</h3>
     <img class="image" src="@/assets/PMSPageBSCommunicate.png" alt="密码管理系统加密信道截图" />
+    <h3>CS客户端页面示例-AES加密解密代码C#实现（部分）</h3>
+    <pre class="code-block">
+    <code>
+      //encrypt decrypt
+internal class crypt
+{
+    public static string GetKey(string aa)
+    {
+        string filtered = Regex.Replace(aa.Trim(), "[\u4e00-\u9fa5]", "");
+        string a = filtered.Trim();
+        // 初始的128位密钥
+        string initialKey = "lg13sgziwsaaig!z";
+        byte[] keyBytes = Encoding.UTF8.GetBytes(initialKey);
+
+        // 遍历输入字符串a
+        for (int i = 0; i < a.Length && i < keyBytes.Length; i++)
+        {
+            if (char.IsLetterOrDigit(a[i])) // 如果是字母或数字
+            {
+                // 替换key中的对应位置的字符
+                keyBytes[i] = (byte)a[i];
+            }
+        }
+
+        // 将字节数组转换为字符串
+        return Encoding.UTF8.GetString(keyBytes);
+    }
+    public static string EncryptString(string plainText, string secretKey)
+    {
+        // 确保密钥长度为16字节
+        if (secretKey.Length != 16)
+        {
+            throw new ArgumentException("Secret key must be 16 bytes long");
+        }
+
+        byte[] key = Encoding.UTF8.GetBytes(secretKey);
+        byte[] iv = Encoding.UTF8.GetBytes("1234567890123456"); // 初始化向量，必须是16字节
+
+        using (Aes aesAlg = Aes.Create())
+        {
+            aesAlg.Key = key;
+            aesAlg.IV = iv;
+            aesAlg.Mode = CipherMode.CBC;
+            aesAlg.Padding = PaddingMode.PKCS7;
+
+            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+            using (MemoryStream msEncrypt = new MemoryStream())
+            {
+                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                {
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        swEncrypt.Write(plainText);
+                    }
+                }
+                return Convert.ToBase64String(msEncrypt.ToArray());
+            }
+        }
+    }
+
+    public static string DecryptString(string cipherText, string secretKey)
+    {
+        // 确保密钥长度为16字节
+        if (secretKey.Length != 16)
+        {
+            throw new ArgumentException("Secret key must be 16 bytes long");
+        }
+
+        byte[] key = Encoding.UTF8.GetBytes(secretKey);
+        byte[] iv = Encoding.UTF8.GetBytes("1234567890123456"); // 初始化向量，必须是16字节
+
+        try
+        {
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = key;
+                aesAlg.IV = iv;
+                aesAlg.Mode = CipherMode.CBC;
+                aesAlg.Padding = PaddingMode.PKCS7;
+
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msDecrypt = new MemoryStream(cipherBytes))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.Error.WriteLine("Error in decryption: " + e.Message);
+            return null;
+        }
+    }
+ }
+    </code>
+    </pre>
+    <h3>CS客户端页面示例-TOTP算法基于C#实现（部分）</h3>
+    <pre class="code-block">
+    <code>
+//TOTP
+using System;
+using System.Security.Cryptography;
+using System.Text;
+public class TOTPUtil
+{
+    private const string Base32Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+
+    // Base32 解码
+    public static byte[] Base32Decode(string base32)
+    {
+        base32 = base32.TrimEnd('=').ToUpperInvariant();
+        byte[] result = new byte[base32.Length * 5 / 8];
+        int buffer = 0, bitsLeft = 0, count = 0;
+
+        foreach (char c in base32)
+        {
+            int val = Base32Chars.IndexOf(c);
+            if (val < 0) continue;
+
+            buffer <<= 5;
+            buffer |= val & 31;
+            bitsLeft += 5;
+
+            if (bitsLeft >= 8)
+            {
+                result[count++] = (byte)((buffer >> (bitsLeft - 8)) & 0xFF);
+                bitsLeft -= 8;
+            }
+        }
+        Array.Resize(ref result, count);
+        return result;
+    }
+
+    // 生成 TOTP
+    public static string GenerateTOTP(string base32Secret, int digits = 6, int timestep = 30)
+    {
+        byte[] key = Base32Decode(base32Secret);
+
+        long counter = DateTimeOffset.UtcNow.ToUnixTimeSeconds() / timestep;
+        byte[] counterBytes = BitConverter.GetBytes(counter);
+        if (BitConverter.IsLittleEndian)
+        {
+            Array.Reverse(counterBytes);
+        }
+
+        using (HMACSHA1 hmac = new HMACSHA1(key))
+        {
+            byte[] hash = hmac.ComputeHash(counterBytes);
+
+            int offset = hash[hash.Length - 1] & 0x0F;
+            int binary = ((hash[offset] & 0x7F) << 24)
+                       | ((hash[offset + 1] & 0xFF) << 16)
+                       | ((hash[offset + 2] & 0xFF) << 8)
+                       | (hash[offset + 3] & 0xFF);
+
+            int otp = binary % (int)Math.Pow(10, digits);
+            return otp.ToString(new string('0', digits)); // 补零
+        }
+    }
+}
+    </code>
+    </pre>
+    <h3>BS客户端页面示例-AES算法基于Java实现（部分）</h3>
+    <pre class="code-block">
+    <code>
+package com.example.demo.services.classes;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
+@Component
+public class AesUtils {
+
+    private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
+    private static final String KEY_ALGORITHM = "AES";
+    private static final byte[] IV = "1234567890123456".getBytes(); // 初始化向量，必须是16字节
+
+    /**
+     * AES加密
+     * @param data 待加密数据
+     * @param secretKey 密钥
+     * @return 加密后的数据
+     */
+    public String encrypt(String data, String secretKey) {
+        try {
+            SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), KEY_ALGORITHM);
+            IvParameterSpec ivSpec = new IvParameterSpec(IV);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
+            byte[] encryptedBytes = cipher.doFinal(data.getBytes("UTF-8"));
+            return Base64.getEncoder().encodeToString(encryptedBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("error encode");
+            return null;
+        }
+    }
+
+    /**
+     * AES解密
+     * @param encryptedData 待解密数据
+     * @param secretKey 密钥
+     * @return 解密后的数据
+     */
+    public String decrypt(String encryptedData, String secretKey) {
+        try {
+            SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), KEY_ALGORITHM);
+            IvParameterSpec ivSpec = new IvParameterSpec(IV);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+            byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
+            return new String(decryptedBytes, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}
+    </code>
+    </pre>
+    <h3>BS客户端页面示例-TOTP算法基于Java实现（部分）</h3>
+    <pre class="code-block">
+    <code>
+      if(Objects.equals(decryptedAccount.classify, "2fa")){
+
+                    // 你已有的 Base32 密钥字符串，例如 "JBSWY3DPEHPK3PXP"
+                    String base32Secret = decryptedAccount.getPin(); // 从 Account 对象中获取 PIN 字段
+                    // 把 Base32 转换为二进制密钥
+                    byte[] secretBytes = new org.apache.commons.codec.binary.Base32().decode(base32Secret);
+                    SecretKey secretKey = new javax.crypto.spec.SecretKeySpec(secretBytes, "HmacSHA1");
+
+                    // 每 30 秒变一次
+                    TimeBasedOneTimePasswordGenerator totp = new TimeBasedOneTimePasswordGenerator(Duration.ofSeconds(30));
+
+                    // 当前时刻验证码
+                    Instant now = Instant.now();
+                    try{
+                        int code = totp.generateOneTimePassword(secretKey, now);
+                        decryptedAccount.setPin(String.format("%06d", code)); // 设置为6位数，前面补0
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+    </code>
+    </pre>
   </div>
 </template>
 
@@ -109,5 +366,16 @@
 .tech-tag:hover {
   transform: scale(1.08);
   background: linear-gradient(90deg, #67c23a 60%, #409eff 100%);
+}
+.code-block {
+  background: #23272e;
+  color: #e6e6e6;
+  font-size: 0.95rem;
+  padding: 1.2rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
 }
 </style>

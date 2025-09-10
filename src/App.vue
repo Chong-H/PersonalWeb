@@ -1,91 +1,136 @@
 <template>
   <div id="falling-container">
+    <!-- 悬浮按钮 -->
+    <button class="sidebar-toggle" @click="showAside = !showAside">
+      <span>☰</span>
+    </button>
+
     <div class="common-layout">
       <el-container>
-        <el-header>
-          <el-text class="main-title" size="large" type="primary">
-            PengCheng Luo's Personal Web
-          </el-text>
-        </el-header>
-
-        <el-container>
-          <!-- 悬浮按钮 -->
-          <button class="sidebar-toggle" @click="showAside = !showAside">
-            <span>☰</span>
-          </button>
-          <el-aside v-show="showAside" width="200px">
-            <el-row class="tac">
-              <el-col :span="23">
-                <h5 class="mb-2 custom-title">please select</h5>
-                <el-menu
-                  active-text-color="#ffd04b"
-                  background-color="#545c64"
-                  class="el-menu-vertical-demo"
-                  default-active="2"
-                  text-color="#fff"
-                  style="height: 100%; width: 100%"
-                  @open="handleOpen"
-                  @close="handleClose"
-                  @select="handleMenuSelect"
-                >
-                  <el-menu-item index="home">
-                    <el-icon><setting /></el-icon>
-                    <span>Home</span>
-                    <!-- <RouterLink to="/">Home</RouterLink> -->
-                  </el-menu-item>
-
-                  <el-sub-menu index="1">
-                    <template #title>
-                      <el-icon><location /></el-icon>
-                      <span>My Projects</span>
-                    </template>
-
-                    <el-sub-menu index="PersonalPro">
-                      <template #title>Personal Projects</template>
-                      <el-menu-item index="pms">pms</el-menu-item>
-                    </el-sub-menu>
-                    <el-sub-menu index="GroupPro">
-                      <template #title>Group Projects</template>
-                      <el-menu-item index="DCS">DCS-Chain </el-menu-item>
-                    </el-sub-menu>
-                  </el-sub-menu>
-
-                  <el-menu-item index="Contact">
-                    <el-icon><icon-menu /></el-icon>
-                    <span>Contact me</span>
-                  </el-menu-item>
-
-                  <el-menu-item index="3" disabled>
-                    <el-icon><document /></el-icon>
-                    <span>Navigator Three</span>
-                  </el-menu-item>
-
-                  <el-menu-item index="4">
-                    <el-icon><setting /></el-icon>
-                    <span>Navigator Four</span>
-                  </el-menu-item>
-
-                  <el-menu-item index="about">
-                    <el-icon><setting /></el-icon>
-                    <!-- <RouterLink to="/about">About</RouterLink> -->
-                    <span>About</span>
-                  </el-menu-item>
+        <!-- 左侧：侧边栏 -->
+        <el-aside v-show="showAside" width="200px">
+          <div class="aside-header">
+            <span class="aside-title">个人网站</span>
+          </div>
+          <el-row class="tac">
+            <el-col :span="23">
+              <h5 class="mb-2 custom-title">please select</h5>
+              <el-menu
+                active-text-color="#ffd04b"
+                background-color="#545c64"
+                class="el-menu-vertical-demo"
+                default-active="2"
+                text-color="#fff"
+                style="height: 100%; width: 100%"
+                @open="handleOpen"
+                @close="handleClose"
+                @select="handleMenuSelect"
+              >
+                <el-menu-item index="home">
+                  <el-icon><setting /></el-icon>
+                  <span>Home</span>
                   <!-- <RouterLink to="/">Home</RouterLink> -->
-                </el-menu>
-              </el-col>
-            </el-row>
-          </el-aside>
+                </el-menu-item>
 
-          <el-main
+                <el-sub-menu index="1">
+                  <template #title>
+                    <el-icon><location /></el-icon>
+                    <span>My Projects</span>
+                  </template>
+
+                  <el-sub-menu index="PersonalPro">
+                    <template #title>Personal Projects</template>
+                    <el-menu-item index="pms">pms</el-menu-item>
+                  </el-sub-menu>
+                  <el-sub-menu index="GroupPro">
+                    <template #title>Group Projects</template>
+                    <el-menu-item index="DCS">DCS-Chain </el-menu-item>
+                  </el-sub-menu>
+                </el-sub-menu>
+
+                <el-menu-item index="Contact">
+                  <el-icon><icon-menu /></el-icon>
+                  <span>Contact me</span>
+                </el-menu-item>
+
+                <el-menu-item index="3" disabled>
+                  <el-icon><document /></el-icon>
+                  <span>Navigator Three</span>
+                </el-menu-item>
+
+                <el-menu-item index="4">
+                  <el-icon><setting /></el-icon>
+                  <span>Navigator Four</span>
+                </el-menu-item>
+
+                <el-menu-item index="about">
+                  <el-icon><setting /></el-icon>
+                  <!-- <RouterLink to="/about">About</RouterLink> -->
+                  <span>About</span>
+                </el-menu-item>
+                <!-- <RouterLink to="/">Home</RouterLink> -->
+              </el-menu>
+            </el-col>
+          </el-row>
+        </el-aside>
+
+        <!-- <el-main
             :style="
               showAside
                 ? 'margin-left:200px;width:calc(100% - 200px);'
                 : 'margin-left:0;width:100%;'
             "
           >
+            <el-header>
+              <el-text class="main-title" size="large" type="primary">
+                PengCheng Luo's Personal Web
+              </el-text>
+            </el-header>
+            <RouterView />
+          </el-main> -->
+
+        <!-- 右侧：主内容区 -->
+        <div class="main-vertical" :style="showAside ? 'margin-left:200px;' : 'margin-left:0px;'">
+          <!-- 上方栏目 -->
+          <el-header class="main-header" :style="showAside ? 'left:200px;' : 'left:0px;'">
+            <div class="header-left">
+              <el-button type="text" @click="showAside = !showAside">
+                <el-icon size="20">
+                  <Expand v-if="showAside" />
+                  <Fold v-else />
+                </el-icon>
+              </el-button>
+
+              <!-- 快捷返回主页面按钮 -->
+              <el-button
+                v-if="$route.path !== '/'"
+                type="primary"
+                @click="handleMenuSelect('home')"
+                class="dashboard-btn"
+                size="small"
+              >
+                <el-icon><House /></el-icon>
+                <span v-show="!showAside">工作台</span>
+              </el-button>
+
+              <el-breadcrumb separator="/">
+                <el-breadcrumb-item>
+                  <el-button text class="breadcrumb-home"> 主页面 </el-button>
+                </el-breadcrumb-item>
+                <el-breadcrumb-item>{{ currentMenuTitle }}</el-breadcrumb-item>
+              </el-breadcrumb>
+            </div>
+
+            <!-- <el-text class="main-title" size="large" type="primary">
+              {{ currentMenuTitle }}
+            </el-text> -->
+          </el-header>
+
+          <!-- 下方内容 -->
+          <el-main>
             <RouterView />
           </el-main>
-        </el-container>
+        </div>
       </el-container>
     </div>
   </div>
@@ -94,11 +139,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { Expand, Fold, House } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 const showAside = ref(true)
+const currentMenuTitle = ref("PengCheng Luo's Personal Web")
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
@@ -107,6 +154,10 @@ const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 
+function toggleSidebar() {
+  showAside.value = !showAside.value
+  // 这里可以加你的侧边栏显示/隐藏逻辑
+}
 const handleMenuSelect = (index: string) => {
   if (index === 'home') {
     router.push('/')
@@ -119,7 +170,7 @@ const handleMenuSelect = (index: string) => {
   } else if (index === 'Contact') {
     router.push('/contact')
   }
-  // 其他菜单项...
+  currentMenuTitle.value = menuMap[index] || "PengCheng Luo's Personal Web"
 }
 
 //效果
@@ -182,6 +233,14 @@ function createFallingChar(x: number, y: number) {
 window.addEventListener('mousemove', (e) => {
   createFallingChar(e.clientX, e.clientY)
 })
+
+const menuMap: Record<string, string> = {
+  home: '首页',
+  about: '关于',
+  pms: 'PMS 密码管理系统',
+  DCS: 'DCS-Chain 数字藏品',
+  Contact: '联系方式',
+}
 </script>
 
 <style scoped>
@@ -189,11 +248,16 @@ header {
   line-height: 1.5;
   max-height: 100vh;
 }
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 .el-aside {
   position: fixed;
   left: 0;
-  top: 64px; /* 如果 header 高度是 64px */
-  height: calc(100vh - 64px);
+  top: 0px; /* 如果 header 高度是 64px */
+  height: calc(100vh - 0px);
   width: 200px; /* 或你自己的宽度 */
   z-index: 999;
   background: #545c64; /* 你想要的灰色 */
@@ -202,18 +266,19 @@ header {
 }
 .el-header {
   position: fixed;
+  /* position: sticky; */
   top: 0;
-  left: 0;
+  /* left: 0; */
   width: 100%;
   height: 64px;
-  z-index: 1000;
+  /* z-index: 1000; */
 
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
   /* box-shadow: 0 2px 8px rgb(255, 158, 158); */
 
-  background-color: #545c64;
+  background-color: #fff;
   color: #333;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -229,14 +294,27 @@ header {
   border-radius: 0;
 }
 .el-main {
-  margin-left: 200px; /* 与 aside 宽度一致 */
-  padding-top: 64px; /* 与 header 高度一致 */
-  min-height: calc(100vh - 64px);
-  width: calc(100% - 200px);
-  background: #ffffff; /* 你想要的灰色 */
+  /* margin-left: 200px;  */
+  /* 与 aside 宽度一致 */
+  padding: 64px 0 0 0; /* 顶部留出header高度，左右无间隙 */
+  margin-left: -7%;
+  margin-right: -7%;
+  left: 0;
+  flex: 1;
+  min-width: 0;
+  background: #ffffff;
   box-sizing: border-box;
 }
+.main-vertical {
+  flex: 1;
+  width: 100%;
+  left: 0;
 
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 .custom-title {
   color: #fffdf8; /* 你想要的颜色 */
 }
@@ -247,9 +325,10 @@ header {
   top: 0;
   left: 0;
   width: 100%;
+  height: 100vh;
   /* background: #feffbc; */
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .logo {
@@ -311,7 +390,7 @@ nav a:first-of-type {
 /* 悬浮按钮样式 */
 .sidebar-toggle {
   position: fixed;
-  top: 32px;
+  bottom: 32px;
   left: 24px;
   z-index: 2000;
   width: 48px;
@@ -330,5 +409,34 @@ nav a:first-of-type {
 }
 .sidebar-toggle:hover {
   background: #67c23a;
+}
+.aside-header {
+  height: 64px;
+  background: #6d7680; /* 比侧边栏浅一点 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.aside-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.el-breadcrumb {
+  display: flex;
+  align-items: center;
+}
+.breadcrumb-home {
+  height: 24px;
+  line-height: 24px;
+  padding: 0;
+  font-size: 1em;
+  vertical-align: middle;
+}
+.el-breadcrumb__item {
+  display: flex;
+  align-items: center;
 }
 </style>
