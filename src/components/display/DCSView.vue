@@ -34,66 +34,8 @@
     <img class="image" src="@/assets/DCSPage.png" alt="数字藏品系统界面截图" />
     -->
     <h3>智能合约-交易记录上链（Solidity 实现）</h3>
-    <pre class="code-block">
-    <code>
-      pragma solidity ^0.4.25;
+    <CollapsibleCodeBlock :code="code1" :previewLines="8" />
 
-contract TransactionRecord {
-
-    struct Trade {
-        uint256 transactionId;
-        uint256 collectibleId;
-        uint256 buyerId;
-        uint256 sellerId;
-        string transactionDate;
-    }
-
-    mapping(uint256 => Trade) public trades;
-
-    event TradeRecorded(
-        uint256 transactionId,
-        uint256 collectibleId,
-        uint256 buyerId,
-        uint256 sellerId,
-        string transactionDate
-    );
-
-    function recordTrade(
-        uint256 transactionId,
-        uint256 collectibleId,
-        uint256 buyerId,
-        uint256 sellerId,
-        string transactionDate
-    ) public {
-        require(trades[transactionId].transactionId == 0); // 确保不重复记录
-
-        trades[transactionId] = Trade(
-            transactionId,
-            collectibleId,
-            buyerId,
-            sellerId,
-            transactionDate
-        );
-
-        emit TradeRecorded(transactionId, collectibleId, buyerId, sellerId, transactionDate);
-    }
-
-    function getTrade(uint256 transactionId) public view returns (
-        uint256, uint256, uint256, uint256, string
-    ) {
-        Trade memory t = trades[transactionId];
-        return (
-            t.transactionId,
-            t.collectibleId,
-            t.buyerId,
-            t.sellerId,
-            t.transactionDate
-        );
-    }
-}
-
-    </code>
-    </pre>
     <h3>服务器启动区块链（linux终端）</h3>
     <pre class="code-block">
     <code>
@@ -109,9 +51,22 @@ contract TransactionRecord {
     </code>
     </pre>
     <h3>后端上链服务类（JAVA）</h3>
-    <pre class="code-block" v-pre>
+    <CollapsibleCodeBlock :code="code2" :previewLines="8" />
+
+    <h3>后端依赖项</h3>
+    <pre class="code-block">
     <code>
-      package edu.swjtu.azurecollection.service;
+    implementation ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.1")
+    </code>
+    </pre>
+  </div>
+</template>
+
+<script setup lang="ts">
+// @ts-ignore   忽略这一行的类型检查。
+import CollapsibleCodeBlock from './CollapsibleCodeBlock.vue'
+const code2 = `
+package edu.swjtu.azurecollection.service;
 
 import edu.swjtu.azurecollection.contract.TransactionRecord;
 import edu.swjtu.azurecollection.pojo.Transaction;
@@ -135,7 +90,7 @@ public class TransactionChainService {
     private TransactionRecord transactionRecord;
     private CryptoKeyPair cryptoKeyPair; // ✅ 添加这行
 
-    @Value("${contract.transactionRecordAddress}")
+    @Value("{contract.transactionRecordAddress}")
     private String contractAddress; // 从配置文件中读取合约地址
 
     public TransactionChainService(Client client) {
@@ -211,16 +166,65 @@ public void saveTransactionOnChain(Transaction tx) {
     }
 }
 
-    </code>
-    </pre>
-    <h3>后端依赖项</h3>
-    <pre class="code-block">
-    <code>
-    implementation ("org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.9.1")
-    </code>
-    </pre>
-  </div>
-</template>
+`
+const code1 = `
+pragma solidity ^0.4.25;
+
+contract TransactionRecord {
+
+    struct Trade {
+        uint256 transactionId;
+        uint256 collectibleId;
+        uint256 buyerId;
+        uint256 sellerId;
+        string transactionDate;
+    }
+
+    mapping(uint256 => Trade) public trades;
+
+    event TradeRecorded(
+        uint256 transactionId,
+        uint256 collectibleId,
+        uint256 buyerId,
+        uint256 sellerId,
+        string transactionDate
+    );
+
+    function recordTrade(
+        uint256 transactionId,
+        uint256 collectibleId,
+        uint256 buyerId,
+        uint256 sellerId,
+        string transactionDate
+    ) public {
+        require(trades[transactionId].transactionId == 0); // 确保不重复记录
+
+        trades[transactionId] = Trade(
+            transactionId,
+            collectibleId,
+            buyerId,
+            sellerId,
+            transactionDate
+        );
+
+        emit TradeRecorded(transactionId, collectibleId, buyerId, sellerId, transactionDate);
+    }
+
+    function getTrade(uint256 transactionId) public view returns (
+        uint256, uint256, uint256, uint256, string
+    ) {
+        Trade memory t = trades[transactionId];
+        return (
+            t.transactionId,
+            t.collectibleId,
+            t.buyerId,
+            t.sellerId,
+            t.transactionDate
+        );
+    }
+}
+`
+</script>
 
 <style scoped>
 .project-info {
