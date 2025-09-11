@@ -41,6 +41,7 @@
                   <el-sub-menu index="PersonalPro">
                     <template #title>Personal Projects</template>
                     <el-menu-item index="pms">pms</el-menu-item>
+                    <el-menu-item index="MCU">MCU</el-menu-item>
                   </el-sub-menu>
                   <el-sub-menu index="GroupPro">
                     <template #title>Group Projects</template>
@@ -127,7 +128,11 @@
           </el-header>
 
           <!-- 下方内容 -->
+
           <el-main>
+            <!-- <template v-if="externalUrl">
+              <iframe :src="externalUrl" style="width: 100%; height: 80vh; border: none"></iframe>
+            </template> -->
             <RouterView />
           </el-main>
         </div>
@@ -147,6 +152,7 @@ import { ref } from 'vue'
 const showAside = ref(true)
 const currentMenuTitle = ref("PengCheng Luo's Personal Web")
 
+const externalUrl = ref('')
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
@@ -169,6 +175,11 @@ const handleMenuSelect = (index: string) => {
     router.push('/dcs-chain')
   } else if (index === 'Contact') {
     router.push('/contact')
+  } else if (index === '4') {
+    // window.location.href = 'https://www.baidu.com'
+    // externalUrl.value = 'https://www.baidu.com'
+  } else if (index === 'MCU') {
+    router.push('/MCU')
   }
   currentMenuTitle.value = menuMap[index] || "PengCheng Luo's Personal Web"
 }

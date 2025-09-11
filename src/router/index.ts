@@ -32,6 +32,11 @@ const router = createRouter({
       name: 'contact',
       component: () => import('../components/display/ContactView.vue'),
     },
+    {
+      path: '/MCU',
+      name: 'MCU',
+      component: () => import('../components/display/McuView.vue'),
+    },
   ],
 })
 
