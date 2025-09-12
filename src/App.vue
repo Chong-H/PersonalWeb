@@ -44,7 +44,7 @@
                     <el-menu-item index="MCU">MCU</el-menu-item>
                   </el-sub-menu>
                   <el-sub-menu index="GroupPro">
-                    <template #title>Group Projects</template>
+                    <template #title>项目经历</template>
                     <el-menu-item index="DCS">DCS-Chain </el-menu-item>
                   </el-sub-menu>
                 </el-sub-menu>
@@ -54,7 +54,7 @@
                   <span>Contact me</span>
                 </el-menu-item>
 
-                <el-menu-item index="3" disabled>
+                <!-- <el-menu-item index="3" disabled>
                   <el-icon><document /></el-icon>
                   <span>Navigator Three</span>
                 </el-menu-item>
@@ -62,7 +62,7 @@
                 <el-menu-item index="4">
                   <el-icon><setting /></el-icon>
                   <span>Navigator Four</span>
-                </el-menu-item>
+                </el-menu-item> -->
 
                 <el-menu-item index="about">
                   <el-icon><setting /></el-icon>
