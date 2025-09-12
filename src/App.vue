@@ -35,7 +35,7 @@
                 <el-sub-menu index="1">
                   <template #title>
                     <el-icon><location /></el-icon>
-                    <span>My Projects</span>
+                    <span>项目经历</span>
                   </template>
 
                   <el-sub-menu index="PersonalPro">
@@ -44,7 +44,7 @@
                     <el-menu-item index="MCU">MCU</el-menu-item>
                   </el-sub-menu>
                   <el-sub-menu index="GroupPro">
-                    <template #title>项目经历</template>
+                    <template #title>group Project</template>
                     <el-menu-item index="DCS">DCS-Chain </el-menu-item>
                   </el-sub-menu>
                 </el-sub-menu>
