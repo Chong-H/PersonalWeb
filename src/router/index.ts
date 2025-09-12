@@ -37,6 +37,11 @@ const router = createRouter({
       name: 'MCU',
       component: () => import('../components/display/McuView.vue'),
     },
+    {
+      path: '/sokoban',
+      name: '/sokoban',
+      component: () => import('../components/display/SokobanView.vue'),
+    },
   ],
 })
 

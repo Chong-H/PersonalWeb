@@ -42,6 +42,7 @@
                     <template #title>Personal Projects</template>
                     <el-menu-item index="pms">pms</el-menu-item>
                     <el-menu-item index="MCU">MCU</el-menu-item>
+                    <el-menu-item index="sokoban">sokoban</el-menu-item>
                   </el-sub-menu>
                   <el-sub-menu index="GroupPro">
                     <template #title>group Project</template>
@@ -180,6 +181,8 @@ const handleMenuSelect = (index: string) => {
     // externalUrl.value = 'https://www.baidu.com'
   } else if (index === 'MCU') {
     router.push('/MCU')
+  } else if (index === 'sokoban') {
+    router.push('/sokoban')
   }
   currentMenuTitle.value = menuMap[index] || "PengCheng Luo's Personal Web"
 }
