@@ -51,6 +51,7 @@
                   <el-sub-menu index="CoursePro">
                     <template #title>Course Projects</template>
                     <el-menu-item index="drinkSeller">Drink Seller</el-menu-item>
+                    <el-menu-item index="os">Operating System</el-menu-item>
                   </el-sub-menu>
                 </el-sub-menu>
 
@@ -189,6 +190,8 @@ const handleMenuSelect = (index: string) => {
     router.push('/sokoban')
   } else if (index === 'drinkSeller') {
     router.push('/drinkSeller')
+  } else if (index === 'os') {
+    router.push('/os')
   }
   currentMenuTitle.value = menuMap[index] || "PengCheng Luo's Personal Web"
 }
