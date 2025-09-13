@@ -5,6 +5,10 @@
       Welcome to the personal web application of PengCheng Luo. This site showcases various projects
       and technical skills.
     </p>
+    <p>
+      Below is a tutorial on how to deploy this project to Cloudflare Pages, addressing specific
+      configuration challenges.
+    </p>
     <h2>部署到 Cloudflare Pages 教程</h2>
     <div class="about-section">
       <h3>项目背景</h3>
