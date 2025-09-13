@@ -48,6 +48,10 @@
                     <template #title>group Project</template>
                     <el-menu-item index="DCS">DCS-Chain </el-menu-item>
                   </el-sub-menu>
+                  <el-sub-menu index="CoursePro">
+                    <template #title>Course Projects</template>
+                    <el-menu-item index="drinkSeller">Drink Seller</el-menu-item>
+                  </el-sub-menu>
                 </el-sub-menu>
 
                 <el-menu-item index="Contact">
@@ -183,6 +187,8 @@ const handleMenuSelect = (index: string) => {
     router.push('/MCU')
   } else if (index === 'sokoban') {
     router.push('/sokoban')
+  } else if (index === 'drinkSeller') {
+    router.push('/drinkSeller')
   }
   currentMenuTitle.value = menuMap[index] || "PengCheng Luo's Personal Web"
 }

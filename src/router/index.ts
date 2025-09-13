@@ -42,6 +42,11 @@ const router = createRouter({
       name: '/sokoban',
       component: () => import('../components/display/SokobanView.vue'),
     },
+    {
+      path: '/drinkSeller',
+      name: '/drinkSeller',
+      component: () => import('../components/display/DrinkSellerView.vue'),
+    },
   ],
 })
 
