@@ -5,6 +5,51 @@
     <h1>罗鹏程</h1>
     <h2>软件工程学生，热爱用知识改变生活。</h2>
 
+    <div class="awards">
+      <h3>荣誉与经历</h3>
+      <ul>
+        <li>国家励志奖学金获得者</li>
+        <li>明诚奖获得者</li>
+        <li>一年学生会社团和一年学院实验室管理员经历</li>
+        <li>两年学院事务中心助理经历</li>
+      </ul>
+    </div>
+
+    <div class="education">
+      <h3>教育背景</h3>
+      <ul>
+        <li>西南交通大学 本科</li>
+        <li>软件工程专业</li>
+      </ul>
+    </div>
+
+    <div class="certificates">
+      <h3>证书</h3>
+      <ul>
+        <li>英语六级证书</li>
+        <li>英语四级证书</li>
+        <li>蓝桥杯A组C++省二</li>
+      </ul>
+    </div>
+
+    <div class="courses">
+      <h3>专业核心课程</h3>
+      <ul>
+        <li>数据库原理（含实验）</li>
+        <li>计算机网络（含实验）</li>
+        <li>计算机组成原理（含实验）</li>
+        <li>算法分析与设计（含实验）</li>
+        <li>操作系统（含实验）</li>
+        <li>计算机图形学（含实验）</li>
+        <li>软件工程</li>
+        <li>单片机原理及应用（含实验）</li>
+        <li>区块链技术及应用</li>
+        <li>数字电子技术（含实验）</li>
+        <li>...</li>
+        <!-- 可继续补充更多课程 -->
+      </ul>
+    </div>
+
     <div class="skills">
       <!-- <span>Vue</span>
       <span>React</span>
@@ -31,7 +76,6 @@
   margin: 0;
 }
 .profile-home h1 {
-  /* font-size: 4rem;  */
   font-weight: bold;
   margin: 1rem 0;
   font-size: 4rem;
@@ -56,6 +100,19 @@
   background-clip: text;
   text-shadow: 0 2px 8px rgba(64, 158, 255, 0.12);
   letter-spacing: 2px;
+}
+.profile-home h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #409eff;
+}
+.profile-home ul {
+  margin-left: 1.2em;
+  margin-bottom: 1.2em;
+  font-size: 1.08rem;
+  line-height: 1.8;
 }
 .contact a {
   display: block;
