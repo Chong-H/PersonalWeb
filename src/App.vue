@@ -261,7 +261,11 @@ const menuMap: Record<string, string> = {
   home: '首页',
   about: '关于',
   pms: 'PMS 密码管理系统',
+  MCU: 'MCU 单片机项目',
+  sokoban: 'Sokoban 推箱子',
   DCS: 'DCS-Chain 数字藏品',
+  drinkSeller: '饮料贩卖机课设',
+  os: '操作系统实验',
   Contact: '联系方式',
 }
 </script>
