@@ -38,6 +38,18 @@
     <p>参考开源设计，使用嘉立创 PCB 制作平台复刻了 USB电流计硬件项目。通过焊接元器件、调试电路，</p>
     <p>实现了 USB设备的电流实时检测与显示，提升了对硬件测量与 PCB 制作流程的理解。</p>
     <p>
+      硬件pcb以及物料参考官方项目（开源协议LGPL3.0）：
+      <a href="https://oshwhub.com/lcds/usb_power" target="_blank" rel="noopener"
+        >https://oshwhub.com/lcds/usb_power</a
+      >
+    </p>
+    <p>
+      代码部分是修改东南大学同学的开源项目（LGPL开源协议）：
+      <a href="https://oshwhub.com/zp815269/usb-dian-l" target="_blank" rel="noopener"
+        >https://oshwhub.com/zp815269/usb-dian-l</a
+      >
+    </p>
+    <p>
       我在该项目复刻中主要做了物料采购，pcb打板，焊接元件，修改显示函数，适配0.91寸OLED屏幕，代码烧录,电流电压放大倍速参数调试等工作。
     </p>
     <img class="image" src="@/assets/usbdetecter.png" alt="嘉立创USB电流计实物图" />
@@ -47,6 +59,15 @@
       基于 ESP32 单片机，复刻了 AI 女友语音交互硬件项目。项目包含语音识别、语音合成模块，通过 ESP32
       实现与用户的语音互动。
     </p>
+    <p>
+      参考项目：
+      <a
+        href="https://oshwhub.com/surferlong/esp32s3-xiaozhi-ai-chat-robot-de"
+        target="_blank"
+        rel="noopener"
+        >https://oshwhub.com/surferlong/esp32s3-xiaozhi-ai-chat-robot-de</a
+      >
+    </p>
     <p>我在该项目复刻中主要做了物料采购，pcb打板，焊接元件，网络环境搭建，代码烧录等工作。</p>
     <img class="image" src="@/assets/AIGF.jpg" alt="ESP32 AI女友项目实物图" />
     <h3>嘉立创示波器项目</h3>
@@ -54,8 +75,19 @@
       参考开源设计，复刻了嘉立创示波器硬件项目。项目包含信号采集、显示模块等功能，能够实现基本的波形显示与分析。
     </p>
     <p>
+      参考项目：
+      <a
+        href="https://oshwhub.com/course-examples/yi-qi-yi-biao-jian-yi-shu-zi-shi-bo-qi-she-ji-cha-jian-ban"
+        target="_blank"
+        rel="noopener"
+        >https://oshwhub.com/course-examples/yi-qi-yi-biao-jian-yi-shu-zi-shi-bo-qi-she-ji-cha-jian-ban</a
+      >
+    </p>
+
+    <p>
       我在该项目复刻中主要做了物料采购，PCB打板，焊接元件，代码烧录等工作，进一步提升了对信号处理和硬件调试的理解。
     </p>
+
     <img class="image" src="@/assets/waveshower.jpg" alt="嘉立创示波器项目实物图" />
   </div>
 </template>
