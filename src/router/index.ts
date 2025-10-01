@@ -52,6 +52,11 @@ const router = createRouter({
       name: '/os',
       component: () => import('../components/display/OsView.vue'),
     },
+    {
+      path: '/other',
+      name: 'other',
+      component: () => import('../components/display/OtherView.vue'),
+    },
   ],
 })
 

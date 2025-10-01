@@ -55,11 +55,6 @@
                   </el-sub-menu>
                 </el-sub-menu>
 
-                <el-menu-item index="Contact">
-                  <el-icon><icon-menu /></el-icon>
-                  <span>Contact me</span>
-                </el-menu-item>
-
                 <!-- <el-menu-item index="3" disabled>
                   <el-icon><document /></el-icon>
                   <span>Navigator Three</span>
@@ -69,10 +64,29 @@
                   <el-icon><setting /></el-icon>
                   <span>Navigator Four</span>
                 </el-menu-item> -->
-
-                <el-menu-item index="about">
-                  <el-icon><setting /></el-icon>
+                <el-sub-menu index="tutorial">
                   <!-- <RouterLink to="/about">About</RouterLink> -->
+
+                  <template #title>
+                    <!-- <el-icon><setting /></el-icon> -->
+                    <el-icon><Document /></el-icon>
+                    <span>tutorial</span>
+                  </template>
+                  <el-menu-item index="other">Other</el-menu-item>
+                  <el-sub-menu index="SiblingPages">
+                    <template #title>SiblingPages</template>
+                    <!-- <el-menu-item index="pms">pms</el-menu-item>
+                    <el-menu-item index="MCU">MCU</el-menu-item>
+                    <el-menu-item index="sokoban">sokoban</el-menu-item> -->
+                  </el-sub-menu>
+                </el-sub-menu>
+                <el-menu-item index="Contact">
+                  <el-icon><icon-menu /></el-icon>
+                  <span>Contact me</span>
+                </el-menu-item>
+                <el-menu-item index="about">
+                  <el-icon><MoreFilled /></el-icon>
+
                   <span>About</span>
                 </el-menu-item>
                 <!-- <RouterLink to="/">Home</RouterLink> -->
@@ -192,8 +206,10 @@ const handleMenuSelect = (index: string) => {
     router.push('/drinkSeller')
   } else if (index === 'os') {
     router.push('/os')
+  } else if (index === 'other') {
+    router.push('/other')
   }
-  currentMenuTitle.value = menuMap[index] || "PengCheng Luo's Personal Web"
+  currentMenuTitle.value = menuMap[index] || '...'
 }
 
 //效果
