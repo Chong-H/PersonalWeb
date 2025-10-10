@@ -43,6 +43,10 @@
         <a href="https://vercel.com/" target="_blank" rel="noopener">Vercel</a
         >：提供NextJs全栈框架的云平台，支持全栈网站和Serverless函数的部署。
       </li>
+      <li>
+        <a href="https://dash.domain.digitalplat.org/" target="_blank" rel="noopener">digitalplat</a
+        >：提供免费域名（可于mainland访问）。
+      </li>
       <!-- 可继续补充更多工具网站 -->
     </ul>
 
