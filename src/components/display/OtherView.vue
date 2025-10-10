@@ -24,7 +24,7 @@
       <li>
         <a href="https://www.cloudflare-cn.com/enterprise/" target="_blank" rel="noopener"
           >Cloudflare</a
-        >：提供免费全球web页面托管服务。
+        >：提供免费全球webPage托管服务，worker提供全球代理功能，http转发。
       </li>
       <li>
         <a href="https://www.pythonanywhere.com/user/chonghe/" target="_blank" rel="noopener"
@@ -38,6 +38,10 @@
       <li>
         <a href="https://element-plus.org/zh-CN/" target="_blank" rel="noopener">Element Plus</a
         >：基于 Vue 3 的组件库，提供丰富的 UI 组件和设计规范。
+      </li>
+      <li>
+        <a href="https://vercel.com/" target="_blank" rel="noopener">Vercel</a
+        >：提供NextJs全栈框架的云平台，支持全栈网站和Serverless函数的部署。
       </li>
       <!-- 可继续补充更多工具网站 -->
     </ul>
