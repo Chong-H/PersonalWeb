@@ -111,6 +111,7 @@
           </el-main> -->
 
         <!-- 右侧：主内容区 -->
+
         <div class="main-vertical" :style="showAside ? 'margin-left:200px;' : 'margin-left:0px;'">
           <!-- 上方栏目 -->
           <el-header class="main-header" :style="showAside ? 'left:200px;' : 'left:0px;'">
@@ -149,12 +150,14 @@
 
           <!-- 下方内容 -->
 
-          <el-main>
-            <!-- <template v-if="externalUrl">
+          <transition name="fade" mode="out-in">
+            <el-main :key="$route.fullPath">
+              <!-- <template v-if="externalUrl">
               <iframe :src="externalUrl" style="width: 100%; height: 80vh; border: none"></iframe>
             </template> -->
-            <RouterView />
-          </el-main>
+              <RouterView />
+            </el-main>
+          </transition>
         </div>
       </el-container>
     </div>
@@ -321,6 +324,7 @@ header {
   /* align-items: center; */
   /* box-shadow: 0 2px 8px rgb(255, 158, 158); */
 
+  z-index: 100;
   background-color: #fff;
   color: #333;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -481,5 +485,36 @@ nav a:first-of-type {
 .el-breadcrumb__item {
   display: flex;
   align-items: center;
+}
+</style>
+<style>
+/* 进入动画起始状态 + 离开动画结束状态 */
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(-30px); /* 关键：水平向左偏移，模拟“从左进入”的起点 */
+}
+
+/* 离开动画结束状态（向左侧外部离开：透明度0 + 向左偏移30px） */
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(30px); /* 离开时也向左侧偏移，保持动画一致性 */
+}
+
+/* 进入/离开动画的活跃状态（过渡时间和曲线不变，确保流畅） */
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease-out; /* 控制动画速度，0.5s 可根据需求调整（如0.6s更慢） */
+}
+
+/* 进入动画结束状态（最终位置：透明度1 + 无偏移） */
+.fade-enter-to {
+  opacity: 1;
+  transform: translateX(0); /* 水平复位，完成“从左到右”的加载 */
+}
+
+/* 离开动画起始状态（初始位置：透明度1 + 无偏移） */
+.fade-leave-from {
+  opacity: 1;
+  transform: translateX(0); /* 离开前保持在正常位置 */
 }
 </style>
