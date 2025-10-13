@@ -523,7 +523,7 @@ void  dfs(point s, point e, char *maze, int row, int col, int &can, vector<point
 }
 .code-block {
   background: #23272e;
-  color: #e6e6e6;
+  color: #dcdcdc;
   font-size: 0.95rem;
   padding: 1.2rem;
   border-radius: 8px;

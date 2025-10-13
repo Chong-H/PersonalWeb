@@ -2,11 +2,12 @@
 
 <template>
   <div class="profile-home">
-    <h1>罗鹏程</h1>
-    <h2>软件工程学生，热爱用知识改变生活。</h2>
+    <h1 class="typing-animation">罗鹏程</h1>
+
+    <h2 class="typing-animation">软件工程专业，热爱用知识改变生活。</h2>
 
     <div class="awards">
-      <h3>荣誉与经历</h3>
+      <h3 class="typing-animation">荣誉与经历</h3>
       <ul>
         <li>国家励志奖学金获得者</li>
         <li>明诚奖获得者</li>
@@ -16,7 +17,7 @@
     </div>
 
     <div class="education">
-      <h3>教育背景</h3>
+      <h3 class="typing-animation">教育背景</h3>
       <ul>
         <li>西南交通大学 本科</li>
         <li>软件工程专业</li>
@@ -24,7 +25,7 @@
     </div>
 
     <div class="certificates">
-      <h3>证书</h3>
+      <h3 class="typing-animation">证书</h3>
       <ul>
         <li>英语六级证书</li>
         <li>英语四级证书</li>
@@ -33,7 +34,7 @@
     </div>
 
     <div class="courses">
-      <h3>专业核心课程</h3>
+      <h3 class="typing-animation">专业核心课程</h3>
       <ul>
         <li>数据库原理（含实验）</li>
         <li>计算机网络（含实验）</li>
@@ -66,6 +67,35 @@
 </template>
 
 <style scoped>
+/* 标题打字机动画 */
+.typing-animation {
+  display: block; /* 改为 block，确保每个标题占据一整行 */
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #409eff;
+  animation:
+    typing 4s steps(20, end),
+    blink 0.5s step-end infinite alternate;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  from {
+    border-color: transparent;
+  }
+  to {
+    border-color: #409eff;
+  }
+}
+/* --------- */
 .profile-home {
   width: 100%;
   background: #fff;
