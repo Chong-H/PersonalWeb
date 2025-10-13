@@ -3,7 +3,7 @@
     <!-- 悬浮按钮 -->
     <button
       class="sidebar-toggle"
-      @click="showAside = !showAside"
+      @click="!isDragging && (showAside = !showAside)"
       @mousedown="startDrag"
       ref="dragButton"
     >
@@ -296,14 +296,19 @@ const menuMap: Record<string, string> = {
 const dragButton = ref<HTMLElement | null>(null)
 const position = ref({ x: 24, y: 32 }) // 初始位置
 
+let isDragging = false // 用于判断是否发生了拖动
+
 const startDrag = (event: MouseEvent) => {
   const button = dragButton.value
   if (!button) return
+
+  isDragging = false // 初始化为未拖动
 
   const startX = event.clientX - position.value.x
   const startY = event.clientY - position.value.y
 
   const onMouseMove = (e: MouseEvent) => {
+    isDragging = true // 一旦触发 mousemove，标记为拖动
     position.value.x = e.clientX - startX
     position.value.y = e.clientY - startY
     updateButtonPosition()
