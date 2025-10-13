@@ -5,6 +5,7 @@
       class="sidebar-toggle"
       @click="!isDragging && (showAside = !showAside)"
       @mousedown="startDrag"
+      @touchstart="startDrag"
       ref="dragButton"
     >
       <span>☰</span>
@@ -298,29 +299,38 @@ const position = ref({ x: 24, y: 32 }) // 初始位置
 
 let isDragging = false // 用于判断是否发生了拖动
 
-const startDrag = (event: MouseEvent) => {
+const startDrag = (event: MouseEvent | TouchEvent) => {
   const button = dragButton.value
   if (!button) return
 
   isDragging = false // 初始化为未拖动
 
-  const startX = event.clientX - position.value.x
-  const startY = event.clientY - position.value.y
+  // 获取初始位置
+  const startX =
+    (event instanceof MouseEvent ? event.clientX : event.touches[0].clientX) - position.value.x
+  const startY =
+    (event instanceof MouseEvent ? event.clientY : event.touches[0].clientY) - position.value.y
 
-  const onMouseMove = (e: MouseEvent) => {
-    isDragging = true // 一旦触发 mousemove，标记为拖动
-    position.value.x = e.clientX - startX
-    position.value.y = e.clientY - startY
+  const onMove = (e: MouseEvent | TouchEvent) => {
+    isDragging = true // 标记为拖动
+    const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX
+    const clientY = e instanceof MouseEvent ? e.clientY : e.touches[0].clientY
+    position.value.x = clientX - startX
+    position.value.y = clientY - startY
     updateButtonPosition()
   }
 
-  const onMouseUp = () => {
-    document.removeEventListener('mousemove', onMouseMove)
-    document.removeEventListener('mouseup', onMouseUp)
+  const onEnd = () => {
+    document.removeEventListener('mousemove', onMove)
+    document.removeEventListener('mouseup', onEnd)
+    document.removeEventListener('touchmove', onMove)
+    document.removeEventListener('touchend', onEnd)
   }
 
-  document.addEventListener('mousemove', onMouseMove)
-  document.addEventListener('mouseup', onMouseUp)
+  document.addEventListener('mousemove', onMove)
+  document.addEventListener('mouseup', onEnd)
+  document.addEventListener('touchmove', onMove)
+  document.addEventListener('touchend', onEnd)
 }
 
 const updateButtonPosition = () => {
