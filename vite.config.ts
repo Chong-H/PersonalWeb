@@ -18,6 +18,6 @@ export default defineConfig({
     port: 5173, // 可自定义端口
   },
   optimizeDeps: {
-    include: ['vue', 'vue-router'], // 提前预构建依赖
+    include: ['vue', 'vue-router', 'animejs'], // 提前预构建依赖
   },
 })

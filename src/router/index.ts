@@ -57,6 +57,11 @@ const router = createRouter({
       name: 'other',
       component: () => import('../components/display/OtherView.vue'),
     },
+    {
+      path: '/abstractFactory',
+      name: 'abstractFactory',
+      component: () => import('../components/display/AbstractFactory.vue'),
+    }
   ],
 })
 

@@ -81,6 +81,7 @@
                   <el-menu-item index="other">Other</el-menu-item>
                   <el-sub-menu index="SiblingPages">
                     <template #title>SiblingPages</template>
+                    <el-menu-item index="abstractFactory">Abstract Factory</el-menu-item>
                     <!-- <el-menu-item index="pms">pms</el-menu-item>
                     <el-menu-item index="MCU">MCU</el-menu-item>
                     <el-menu-item index="sokoban">sokoban</el-menu-item> -->
@@ -217,6 +218,8 @@ const handleMenuSelect = (index: string) => {
     router.push('/os')
   } else if (index === 'other') {
     router.push('/other')
+  } else if (index === 'abstractFactory') {
+    router.push('/abstractFactory')
   }
   currentMenuTitle.value = menuMap[index] || '...'
 }
