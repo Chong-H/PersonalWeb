@@ -1,7 +1,12 @@
 <template>
   <div id="falling-container">
     <!-- 悬浮按钮 -->
-    <button class="sidebar-toggle" @click="showAside = !showAside">
+    <button
+      class="sidebar-toggle"
+      @click="showAside = !showAside"
+      @mousedown="startDrag"
+      ref="dragButton"
+    >
       <span>☰</span>
     </button>
 
@@ -287,6 +292,39 @@ const menuMap: Record<string, string> = {
   os: '操作系统实验',
   Contact: '联系方式',
 }
+// 侧边栏拖拽功能
+const dragButton = ref<HTMLElement | null>(null)
+const position = ref({ x: 24, y: 32 }) // 初始位置
+
+const startDrag = (event: MouseEvent) => {
+  const button = dragButton.value
+  if (!button) return
+
+  const startX = event.clientX - position.value.x
+  const startY = event.clientY - position.value.y
+
+  const onMouseMove = (e: MouseEvent) => {
+    position.value.x = e.clientX - startX
+    position.value.y = e.clientY - startY
+    updateButtonPosition()
+  }
+
+  const onMouseUp = () => {
+    document.removeEventListener('mousemove', onMouseMove)
+    document.removeEventListener('mouseup', onMouseUp)
+  }
+
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', onMouseUp)
+}
+
+const updateButtonPosition = () => {
+  const button = dragButton.value
+  if (button) {
+    button.style.left = `${position.value.x}px`
+    button.style.top = `${position.value.y}px`
+  }
+}
 </script>
 
 <style scoped>
@@ -453,6 +491,20 @@ nav a:first-of-type {
   align-items: center;
   justify-content: center;
   transition: background 0.2s;
+  left: 44px; /* 初始位置 */
+  top: 48px; /* 初始位置 */
+  animation: heartbeat 1s infinite ease-in-out; /* 添加心跳动画 */
+}
+
+/* 心跳动画 */
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: translateY(0); /* 初始位置 */
+  }
+  50% {
+    transform: translateY(-5px); /* 向上移动 10px */
+  }
 }
 .sidebar-toggle:hover {
   background: #67c23a;
