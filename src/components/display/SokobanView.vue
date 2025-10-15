@@ -27,38 +27,43 @@
       <li>队列空则无解。</li>
     </ol>
     <h3>关键函数与算法对应关系</h3>
-    <table class="algo-table">
-      <tr>
-        <th>函数名</th>
-        <th>核心作用</th>
-        <th>依赖算法</th>
-      </tr>
-      <tr>
-        <td>fzxj</td>
-        <td>最优路径搜索（主函数）</td>
-        <td>分支限界 + A*</td>
-      </tr>
-      <tr>
-        <td>lowerbound</td>
-        <td>计算启发式估值（曼哈顿距离）</td>
-        <td>A* 启发函数</td>
-      </tr>
-      <tr>
-        <td>dfs</td>
-        <td>机器人移动可行性校验</td>
-        <td>DFS（深度优先）</td>
-      </tr>
-      <tr>
-        <td>Compare</td>
-        <td>优先队列排序规则</td>
-        <td>A* 估值排序</td>
-      </tr>
-      <tr>
-        <td>visited</td>
-        <td>箱子位置去重</td>
-        <td>分支限界剪枝</td>
-      </tr>
+    <table class="algo-table" role="table">
+      <thead>
+        <tr>
+          <th>函数名</th>
+          <th>核心作用</th>
+          <th>依赖算法</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>fzxj</td>
+          <td>最优路径搜索（主函数）</td>
+          <td>分支限界 + A*</td>
+        </tr>
+        <tr>
+          <td>lowerbound</td>
+          <td>计算启发式估值（曼哈顿距离）</td>
+          <td>A* 启发函数</td>
+        </tr>
+        <tr>
+          <td>dfs</td>
+          <td>机器人移动可行性校验</td>
+          <td>DFS（深度优先）</td>
+        </tr>
+        <tr>
+          <td>Compare</td>
+          <td>优先队列排序规则</td>
+          <td>A* 估值排序</td>
+        </tr>
+        <tr>
+          <td>visited</td>
+          <td>箱子位置去重</td>
+          <td>分支限界剪枝</td>
+        </tr>
+      </tbody>
     </table>
+
     <h3>结论</h3>
     <p>
       本项目通过分支限界算法与A*启发式搜索结合，配合DFS可行性校验，实现了高效且准确的推箱子最优解搜索。分支限界负责状态管理与剪枝，A*引导搜索方向，DFS辅助校验，有效提升了算法性能和游戏体验。
