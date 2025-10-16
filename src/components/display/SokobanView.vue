@@ -79,7 +79,7 @@
 // @ts-ignore   忽略这一行的类型检查。
 import CollapsibleCodeBlock from './CollapsibleCodeBlock.vue'
 // 引入代码块
-import codeSokoban from '@/assets/sokoban.cpp?raw'
+import codeSokoban from '@/assets/codes/sokoban.cpp?raw'
 </script>
 
 <style scoped>

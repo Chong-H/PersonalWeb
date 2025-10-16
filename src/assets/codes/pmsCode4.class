@@ -1,0 +1,20 @@
+if(Objects.equals(decryptedAccount.classify, "2fa")){
+
+                    // 你已有的 Base32 密钥字符串，例如 "JBSWY3DPEHPK3PXP"
+                    String base32Secret = decryptedAccount.getPin(); // 从 Account 对象中获取 PIN 字段
+                    // 把 Base32 转换为二进制密钥
+                    byte[] secretBytes = new org.apache.commons.codec.binary.Base32().decode(base32Secret);
+                    SecretKey secretKey = new javax.crypto.spec.SecretKeySpec(secretBytes, "HmacSHA1");
+
+                    // 每 30 秒变一次
+                    TimeBasedOneTimePasswordGenerator totp = new TimeBasedOneTimePasswordGenerator(Duration.ofSeconds(30));
+
+                    // 当前时刻验证码
+                    Instant now = Instant.now();
+                    try{
+                        int code = totp.generateOneTimePassword(secretKey, now);
+                        decryptedAccount.setPin(String.format("%06d", code)); // 设置为6位数，前面补0
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }

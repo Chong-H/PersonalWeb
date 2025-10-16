@@ -1,0 +1,55 @@
+ package com.example.demo.services.classes;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
+@Component
+public class AesUtils {
+
+    private static final String ALGORITHM = "AES/CBC/PKCS5Padding";
+    private static final String KEY_ALGORITHM = "AES";
+    private static final byte[] IV = "1234567890123456".getBytes(); // 初始化向量，必须是16字节
+
+    /**
+     * AES加密
+     * @param data 待加密数据
+     * @param secretKey 密钥
+     * @return 加密后的数据
+     */
+    public String encrypt(String data, String secretKey) {
+        try {
+            SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), KEY_ALGORITHM);
+            IvParameterSpec ivSpec = new IvParameterSpec(IV);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
+            byte[] encryptedBytes = cipher.doFinal(data.getBytes("UTF-8"));
+            return Base64.getEncoder().encodeToString(encryptedBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("error encode");
+            return null;
+        }
+    }
+
+    /**
+     * AES解密
+     * @param encryptedData 待解密数据
+     * @param secretKey 密钥
+     * @return 解密后的数据
+     */
+    public String decrypt(String encryptedData, String secretKey) {
+        try {
+            SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), KEY_ALGORITHM);
+            IvParameterSpec ivSpec = new IvParameterSpec(IV);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+            byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
+            return new String(decryptedBytes, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}
