@@ -38,27 +38,34 @@
     <h3>BS客户端页面示例-加密数据交流演示</h3>
     <img class="image" src="@/assets/PMSPageBSCommunicate.png" alt="密码管理系统加密信道截图" />
     <h3>CS客户端页面示例-AES加密解密代码C#实现（部分）</h3>
-    <CollapsibleCodeBlock :code="code1" :previewLines="8" />
+    <CollapsibleCodeBlock v-if="code1" :code="code1" :previewLines="8" />
 
     <h3>CS客户端页面示例-TOTP算法基于C#实现（部分）</h3>
-    <CollapsibleCodeBlock :code="code2" :previewLines="8" />
+    <CollapsibleCodeBlock v-if="code2" :code="code2" :previewLines="8" />
 
     <h3>BS客户端页面示例-AES算法基于Java实现（部分）</h3>
-    <CollapsibleCodeBlock :code="code3" :previewLines="8" />
+    <CollapsibleCodeBlock v-if="code3" :code="code3" :previewLines="8" />
 
     <h3>BS客户端页面示例-TOTP算法基于Java实现（部分）</h3>
-    <CollapsibleCodeBlock :code="code4" :previewLines="8" />
+    <CollapsibleCodeBlock v-if="code4" :code="code4" :previewLines="8" />
   </div>
 </template>
 
 <script setup lang="ts">
 // @ts-ignore   忽略这一行的类型检查。
 import CollapsibleCodeBlock from './CollapsibleCodeBlock.vue'
-import code4 from '@/assets/codes/pmsCode4.class?raw'
-import code3 from '@/assets/codes/pmsCode3.class?raw'
-import code2 from '@/assets/codes/pmsCode2.cs?raw'
+import { ref, onMounted } from 'vue'
+const code1 = ref<string | null>(null)
+const code2 = ref<string | null>(null)
+const code3 = ref<string | null>(null)
+const code4 = ref<string | null>(null)
 
-import code1 from '@/assets/codes/pmsCode1.cs?raw'
+onMounted(async () => {
+  code1.value = await import('@/assets/codes/pmsCode1.cs?raw').then((module) => module.default)
+  code2.value = await import('@/assets/codes/pmsCode2.cs?raw').then((module) => module.default)
+  code3.value = await import('@/assets/codes/pmsCode3.class?raw').then((module) => module.default)
+  code4.value = await import('@/assets/codes/pmsCode4.class?raw').then((module) => module.default)
+})
 </script>
 
 <style scoped>

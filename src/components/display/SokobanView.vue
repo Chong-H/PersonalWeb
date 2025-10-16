@@ -71,15 +71,23 @@
     <h3>预测路径（程序运行截图，其中B是box,S是人，T是目标位置）</h3>
     <img class="image" src="@/assets/sokoban.png" alt="推箱子游戏界面截图" />
     <h3>部分核心代码展示（C++）</h3>
-    <CollapsibleCodeBlock :code="codeSokoban" :previewLines="8" />
+    <CollapsibleCodeBlock v-if="codeSokoban" :code="codeSokoban" :previewLines="8" />
   </div>
 </template>
 
 <script setup lang="ts">
 // @ts-ignore   忽略这一行的类型检查。
 import CollapsibleCodeBlock from './CollapsibleCodeBlock.vue'
-// 引入代码块
-import codeSokoban from '@/assets/codes/sokoban.cpp?raw'
+
+import { ref, onMounted } from 'vue'
+
+const codeSokoban = ref<string | null>(null)
+
+onMounted(async () => {
+  codeSokoban.value = await import('@/assets/codes/sokoban.cpp?raw').then(
+    (module) => module.default,
+  )
+})
 </script>
 
 <style scoped>

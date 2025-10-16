@@ -33,7 +33,7 @@
     </p>
 
     <h3>核心 Verilog 代码（部分/由组员田同学完成）</h3>
-    <CollapsibleCodeBlock :code="verilogCode" :previewLines="8" />
+    <CollapsibleCodeBlock v-if="verilogCode" :code="verilogCode" :previewLines="8" />
 
     <h3>ModelSim 仿真示例（由我负责写代码）</h3>
     <p>
@@ -41,7 +41,7 @@
       投币显示总额：2 元，购买成功，输出饮料 + 找零 0.5 元<br />
       ModelSim 波形显示：total_coin_display = 0100，change_display = 0001
     </p>
-    <CollapsibleCodeBlock :code="testbench1" :previewLines="8" />
+    <CollapsibleCodeBlock v-if="testbench1" :code="testbench1" :previewLines="8" />
     <img class="image" src="@/assets/wave1.png" alt="波形图1" />
     <p>
       <strong>分析波形和其在测试视频代表的意思：</strong><br />
@@ -61,7 +61,7 @@
       投币显示总额：3 元，购买成功，输出饮料 + 找零 1.5 元<br />
       ModelSim 波形显示：total_coin_display = 0110，change_display = 0011
     </p>
-    <CollapsibleCodeBlock :code="testbench2" :previewLines="8" />
+    <CollapsibleCodeBlock v-if="testbench2" :code="testbench2" :previewLines="8" />
     <img class="image" src="@/assets/wave2.png" alt="波形图2" />
     <p>
       <strong>分析波形和其在测试视频代表的意思：</strong><br />
@@ -108,10 +108,22 @@
 <script setup lang="ts">
 // @ts-ignore   忽略这一行的类型检查。
 import CollapsibleCodeBlock from './CollapsibleCodeBlock.vue'
-import verilogCode from '@/assets/codes/drinkSeller/verilogCode.v?raw'
-
-import testbench1 from '@/assets/codes/drinkSeller/testbench1.v?raw'
-import testbench2 from '@/assets/codes/drinkSeller/testbench2.v?raw'
+import { ref, onMounted } from 'vue'
+// 引入代码块
+const verilogCode = ref<string | null>(null)
+const testbench1 = ref<string | null>(null)
+const testbench2 = ref<string | null>(null)
+onMounted(async () => {
+  verilogCode.value = await import('@/assets/codes/drinkSeller/verilogCode.v?raw').then(
+    (module) => module.default,
+  )
+  testbench1.value = await import('@/assets/codes/drinkSeller/testbench1.v?raw').then(
+    (module) => module.default,
+  )
+  testbench2.value = await import('@/assets/codes/drinkSeller/testbench2.v?raw').then(
+    (module) => module.default,
+  )
+})
 
 const pinTable = `
 信号名         主板器件    PIN
