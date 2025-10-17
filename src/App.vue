@@ -245,6 +245,8 @@ const handleMenuSelect = (index: string) => {
   }
 }
 
+// 控制生成图标的频率
+let lastTime = 0 // 上次生成图标的时间
 //效果
 function createFallingChar(x: number, y: number) {
   const chars = [
@@ -303,7 +305,12 @@ function createFallingChar(x: number, y: number) {
 }
 
 window.addEventListener('mousemove', (e) => {
-  createFallingChar(e.clientX, e.clientY)
+  const now = Date.now()
+  if (now - lastTime > 900) {
+    // 限制每 100ms 生成一个图标
+    createFallingChar(e.clientX, e.clientY)
+    lastTime = now
+  }
 })
 
 const menuMap: Record<string, string> = {
@@ -627,7 +634,7 @@ nav a:first-of-type {
 .loading-spinner {
   width: 50px;
   height: 50px;
-  border: 5px solid rgba(207, 254, 253, 0.3); /* 橙黄色的半透明背景 */
+  border: 5px solid rgba(167, 244, 241, 0.3); /* 橙黄色的半透明背景 */
   border-top: 5px solid #ffec42; /* 橙黄色 */
   border-radius: 50%;
   animation: spin 1s linear infinite;

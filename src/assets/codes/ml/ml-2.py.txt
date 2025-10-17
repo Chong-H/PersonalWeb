@@ -1,0 +1,57 @@
+import numpy as np
+import matplotlib.pyplot as plt
+# read data from files
+load_data1 = np.loadtxt('experiment_02_training_set.csv',delimiter=',')
+load_data2 = np.loadtxt('experiment_02_testing_set.csv',delimiter=',')
+num_train = load_data1.shape[0]
+num_test = load_data2.shape[0]
+# split the data
+train_x = load_data1[:,0].reshape((num_train,1))
+train_x_extend=np.hstack((train_x,np.ones((num_train,1))))
+train_y = load_data1[:,1].reshape((num_train,1))
+test_x = load_data2[:,0].reshape((num_test,1))
+test_x_extend=np.hstack((test_x,np.ones((num_test,1))))
+
+test_y = load_data2[:,1].reshape((num_test,1))
+
+w=np.dot(np.linalg.inv(np.dot(train_x_extend.T,train_x_extend) ),np.dot(train_x_extend.T,train_y))
+w_rounded = np.round(w, 2)
+print(w_rounded)
+def MSE(y_true,y_pred):
+    return np.mean((y_true-y_pred)**2)
+test_x_pred = np.dot(test_x_extend,w_rounded)
+print(MSE(test_y,test_x_pred))
+# plot the results
+plt.scatter(train_x,train_y,color='blue',label='Training Data')
+plt.scatter(test_x,test_y,color='green',label='Testing Data')
+plt.plot(test_x,test_x_pred,color='red',label='model')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Linear Regression')
+plt.legend()
+plt.show()
+
+# -------------------------------------
+print("-------------------------------------------------------")
+# 计算第一列的平方
+first_col_squared = (train_x_extend[:, 0] ** 2).reshape(-1, 1)
+# 拼接到 train_x_extend 前面
+train_x_extend2 = np.hstack((first_col_squared, train_x_extend))
+
+w1=np.dot(np.linalg.inv(np.dot(train_x_extend2.T,train_x_extend2) ),np.dot(train_x_extend2.T,train_y))
+w_rounded1 = np.round(w1, 2)
+print(w_rounded1)
+test_x_extend2=np.hstack((test_x**2,test_x_extend))
+test_x_pred2 = np.dot(test_x_extend2,w_rounded1)
+print(MSE(test_y,test_x_pred2))
+# plot the results
+plt.scatter(train_x,train_y,color='blue',label='Training Data')
+plt.scatter(test_x,test_y,color='green',label='Testing Data')
+x_curve = np.linspace(np.min(train_x), np.max(train_x), 200)
+y_curve = w_rounded1[0]*x_curve**2 + w_rounded1[1]*x_curve + w_rounded1[2]
+plt.plot(x_curve, y_curve, color='red', label='model')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Polynomial Regression (Degree 2)')
+plt.legend()
+plt.show()

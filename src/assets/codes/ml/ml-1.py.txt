@@ -1,0 +1,66 @@
+# 计算线性回归三个模型的各个指标
+import numpy as np
+load_data = np.loadtxt('experiment_01_dataset_01.csv',delimiter=',')
+print(load_data)
+# 求SSE
+def SSE(y_true,y_pred):
+    return np.sum((y_true-y_pred)**2)
+# 求MSE
+def MSE(y_true,y_pred):
+    return np.mean((y_true-y_pred)**2)
+# 求RMSE
+def RMSE(y_true,y_pred):
+    return np.sqrt(np.mean((y_true-y_pred)**2))
+# 求MAE
+def MAE(y_true,y_pred):
+    return np.mean(np.abs(y_true-y_pred))
+
+for i in range(3):
+    print("model",i+1,":")
+    y_true = load_data[:,1]
+    y_pred = load_data[:,i+2]
+    print (y_true[:10])
+    print (y_pred[:10])
+    print(f"SSE:{SSE(y_true,y_pred):0.2f}",)
+    print(f"MSE:{MSE(y_true,y_pred):0.2f}")
+    print(f"RMSE:{RMSE(y_true,y_pred):0.2f}")
+    print(f"MAE:{MAE(y_true,y_pred):0.2f}")
+
+print("-------------------------------------------------------")
+# 计算三个逻辑回归模型查准率、查全率、F1值指标和混淆矩阵
+load_data1 = np.loadtxt('experiment_01_dataset_02.csv',delimiter=',')
+print(load_data1[-10:,])
+print(load_data1[:10,])
+
+# 求查准率
+def precision(y_true,y_pred):
+    TP=np.sum((y_true==1) & (y_pred==1))
+    FP=np.sum((y_true==0) & (y_pred==1))
+    return TP/(TP+FP)
+# 求查全率
+def recall(y_true,y_pred):
+    TP=np.sum((y_true==1) & (y_pred==1))
+    FN=np.sum((y_true==1) & (y_pred==0))
+    return TP/(TP+FN)
+# 求F1值
+def F1(y_true,y_pred):
+    p=precision(y_true,y_pred)
+    r=recall(y_true,y_pred)
+    return 2*p*r/(p+r)
+# 求混淆矩阵
+def confusion_matrix(y_true,y_pred):
+    TP=np.sum((y_true==1) & (y_pred==1))
+    TN=np.sum((y_true==0) & (y_pred==0))
+    FP=np.sum((y_true==0) & (y_pred==1))
+    FN=np.sum((y_true==1) & (y_pred==0))
+    return np.array([[TP,FP],[FN,TN]])
+for i in range(3):
+    print("model",i+1,":")
+    y_true = load_data1[:,1]
+    y_pred = load_data1[:,i+2]
+    print (y_true[:10],)
+    print (y_pred[:10],)
+    print(f"precision:{precision(y_true,y_pred):0.2f}",)
+    print(f"recall:{recall(y_true,y_pred):0.2f}")
+    print(f"F1:{F1(y_true,y_pred):0.2f}")
+    print(f"confusion_matrix:\n{confusion_matrix(y_true,y_pred)}")
