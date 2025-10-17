@@ -1,5 +1,11 @@
 <template>
   <div id="falling-container">
+    <!-- Loading 动画 -->
+    <div v-if="isLoading" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading...</p>
+    </div>
+
     <!-- 悬浮按钮 -->
     <button
       class="sidebar-toggle"
@@ -58,6 +64,7 @@
                     <template #title>Course Projects</template>
                     <el-menu-item index="drinkSeller">Drink Seller</el-menu-item>
                     <el-menu-item index="os">Operating System</el-menu-item>
+                    <el-menu-item index="ml">Machine Learning</el-menu-item>
                   </el-sub-menu>
                 </el-sub-menu>
 
@@ -174,6 +181,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
 import { Expand, Fold, House } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
@@ -190,38 +198,51 @@ const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 
+const isLoading = ref(false) // 控制 loading 动画的显示
+
 function toggleSidebar() {
   showAside.value = !showAside.value
   // 这里可以加你的侧边栏显示/隐藏逻辑
 }
 const handleMenuSelect = (index: string) => {
-  if (index === 'home') {
-    router.push('/')
-  } else if (index === 'about') {
-    router.push('/about')
-  } else if (index === 'pms') {
-    router.push('/pms')
-  } else if (index === 'DCS') {
-    router.push('/dcs-chain')
-  } else if (index === 'Contact') {
-    router.push('/contact')
-  } else if (index === '4') {
-    // window.location.href = 'https://www.baidu.com'
-    // externalUrl.value = 'https://www.baidu.com'
-  } else if (index === 'MCU') {
-    router.push('/MCU')
-  } else if (index === 'sokoban') {
-    router.push('/sokoban')
-  } else if (index === 'drinkSeller') {
-    router.push('/drinkSeller')
-  } else if (index === 'os') {
-    router.push('/os')
-  } else if (index === 'other') {
-    router.push('/other')
-  } else if (index === 'abstractFactory') {
-    router.push('/abstractFactory')
+  isLoading.value = true // 开始显示 loading 动画
+  try {
+    if (index === 'home') {
+      router.push('/')
+    } else if (index === 'about') {
+      router.push('/about')
+    } else if (index === 'pms') {
+      router.push('/pms')
+    } else if (index === 'DCS') {
+      router.push('/dcs-chain')
+    } else if (index === 'Contact') {
+      router.push('/contact')
+    } else if (index === '4') {
+      // window.location.href = 'https://www.baidu.com'
+      // externalUrl.value = 'https://www.baidu.com'
+    } else if (index === 'MCU') {
+      router.push('/MCU')
+    } else if (index === 'sokoban') {
+      router.push('/sokoban')
+    } else if (index === 'drinkSeller') {
+      router.push('/drinkSeller')
+    } else if (index === 'os') {
+      router.push('/os')
+    } else if (index === 'other') {
+      router.push('/other')
+    } else if (index === 'abstractFactory') {
+      router.push('/abstractFactory')
+    } else if ((index = 'ml')) {
+      router.push('/ml')
+    }
+    currentMenuTitle.value = menuMap[index] || '...'
+  } catch (error) {
+    console.error('Navigation error:', error)
+  } finally {
+    setTimeout(() => {
+      isLoading.value = false // 跳转完成后隐藏 loading 动画
+    }, 300) // 确保 loading 至少显示 300ms
   }
-  currentMenuTitle.value = menuMap[index] || '...'
 }
 
 //效果
@@ -586,5 +607,46 @@ nav a:first-of-type {
 .fade-leave-from {
   opacity: 1;
   transform: translateX(0); /* 离开前保持在正常位置 */
+}
+
+/* loading animation */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+  display: flex;
+  flex-direction: column; /* 垂直排列 */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* 确保在最上层 */
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(207, 254, 253, 0.3); /* 橙黄色的半透明背景 */
+  border-top: 5px solid #ffec42; /* 橙黄色 */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  margin-top: 1rem; /* 与动画保持一定距离 */
+  font-size: 1.2rem;
+  color: #fff675; /* 橙黄色文字 */
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* 添加轻微阴影 */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

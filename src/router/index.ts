@@ -61,6 +61,11 @@ const router = createRouter({
       path: '/abstractFactory',
       name: 'abstractFactory',
       component: () => import('../components/display/AbstractFactory.vue'),
+    },
+    {
+      path: '/ml',
+      name: 'ml',
+      component: () => import('../components/display/MachineLearning.vue'),
     }
   ],
 })
