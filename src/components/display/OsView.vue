@@ -9,7 +9,7 @@
       的软中断信号，子进程收到后终止运行。父进程调用
       <code>wait()</code> 等待两个子进程终止，然后自我终止。
     </p>
-    <img class="image" src="@/assets/os2.png" alt="软中断通信实验实验场景" />
+    <img class="image" src="@/assets/pictures/os/os2.png" alt="软中断通信实验实验场景" />
     <CollapsibleCodeBlock v-if="osCode1" :code="osCode1" :previewLines="8" />
 
     <h3>线程同步实验</h3>
@@ -17,7 +17,7 @@
       编写 Linux 线程程序，利用线程信号量及 PV
       操作实现生产者—消费者同步关系。生产者线程生产产品，消费者线程消费产品，信号量保证仓库容量和互斥访问。
     </p>
-    <img class="image" src="@/assets/os3.png" alt="线程同步实验场景" />
+    <img class="image" src="@/assets/pictures/os/os3.png" alt="线程同步实验场景" />
     <CollapsibleCodeBlock v-if="osCode2" :code="osCode2" :previewLines="8" />
 
     <h3>进程调度实验</h3>
@@ -25,10 +25,10 @@
       在 Linux 下编程实现进程调度策略算法的模拟程序，支持
       FCFS（先到先服务）、RR（轮循）、基于优先级的调度算法。通过输入进程参数，模拟不同调度策略下的执行过程。
     </p>
-    <img class="image" src="@/assets/os4r.png" alt="进程调度实验场景" />
-    <img class="image" src="@/assets/os4p.png" alt="进程调度实验场景" />
-    <img class="image" src="@/assets/os4f.png" alt="进程调度实验场景" />
-    <img class="image" src="@/assets/os4e.png" alt="进程调度实验场景" />
+    <img class="image" src="@/assets/pictures/os/os4r.png" alt="进程调度实验场景" />
+    <img class="image" src="@/assets/pictures/os/os4p.png" alt="进程调度实验场景" />
+    <img class="image" src="@/assets/pictures/os/os4f.png" alt="进程调度实验场景" />
+    <img class="image" src="@/assets/pictures/os/os4e.png" alt="进程调度实验场景" />
     <CollapsibleCodeBlock v-if="osCode3" :code="osCode3" :previewLines="8" />
 
     <h3>内存管理实验</h3>
@@ -36,10 +36,10 @@
       在 Linux 下编程实现虚存页面替换算法的模拟程序。根据用户输入参数，随机生成页访问顺序，支持
       OPT、FIFO、LRU 替换算法，并输出页替换流程结果和缺页次数。
     </p>
-    <img class="image" src="@/assets/os5f.png" alt="内存管理实验场景" />
-    <img class="image" src="@/assets/os5o.png" alt="内存管理实验场景" />
-    <img class="image" src="@/assets/os5l.png" alt="内存管理实验场景" />
-    <img class="image" src="@/assets/os5e.png" alt="内存管理实验场景" />
+    <img class="image" src="@/assets/pictures/os/os5f.png" alt="内存管理实验场景" />
+    <img class="image" src="@/assets/pictures/os/os5o.png" alt="内存管理实验场景" />
+    <img class="image" src="@/assets/pictures/os/os5l.png" alt="内存管理实验场景" />
+    <img class="image" src="@/assets/pictures/os/os5e.png" alt="内存管理实验场景" />
     <CollapsibleCodeBlock v-if="osCode4" :code="osCode4" :previewLines="8" />
   </div>
 </template>

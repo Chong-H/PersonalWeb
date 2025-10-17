@@ -18,10 +18,10 @@
       <span class="tech-tag">C语言</span>
     </div>
     <h3>实验1-跑马灯实验（汇编语言）</h3>
-    <img class="image" src="@/assets/runningled.png" alt="51单片机实验场景" />
-    <img class="image" src="@/assets/runningled-lab.jpg" alt="51单片机实验场景" />
+    <img class="image" src="@/assets/pictures/mcus/runningled.png" alt="51单片机实验场景" />
+    <img class="image" src="@/assets/pictures/mcus/runningled-lab.jpg" alt="51单片机实验场景" />
     <h3>实验8-LCD显示屏显示学号实验（C语言实现）</h3>
-    <img class="image" src="@/assets/51MCUScreen1.png" alt="51单片机实验场景" />
+    <img class="image" src="@/assets/pictures/mcus/51MCUScreen1.png" alt="51单片机实验场景" />
 
     <h3>数码显像管实验出现鬼影（C语言）</h3>
     <p>
@@ -31,7 +31,7 @@
       1. 先关闭所有位选信号，再改变段选信号，最后打开位选信号。 2.
       先关闭所有段选信号，再改变位选信号，最后打开段选信号。（在下一个位选信号发出前，段选信号发送FF，使得这一时刻显像管不显示”）
     </p>
-    <img class="image" src="@/assets/ghost.jpg" alt="51单片机实验场景" />
+    <img class="image" src="@/assets/pictures/mcus/ghost.jpg" alt="51单片机实验场景" />
 
     <h2>复刻硬件项目</h2>
     <h3>嘉立创 USB 电流计</h3>
@@ -52,8 +52,8 @@
     <p>
       我在该项目复刻中主要做了物料采购，pcb打板，焊接元件，修改显示函数，适配0.91寸OLED屏幕，代码烧录,电流电压放大倍速参数调试等工作。
     </p>
-    <img class="image" src="@/assets/usbdetecter.png" alt="嘉立创USB电流计实物图" />
-    <img class="image" src="@/assets/usbdetecter2.png" alt="嘉立创USB电流计实物图" />
+    <img class="image" src="@/assets/pictures/mcus/usbdetecter.png" alt="嘉立创USB电流计实物图" />
+    <img class="image" src="@/assets/pictures/mcus/usbdetecter2.png" alt="嘉立创USB电流计实物图" />
     <h3>ESP32 AI 女友项目</h3>
     <p>
       基于 ESP32 单片机，复刻了 AI 女友语音交互硬件项目。项目包含语音识别、语音合成模块，通过 ESP32
@@ -69,7 +69,7 @@
       >
     </p>
     <p>我在该项目复刻中主要做了物料采购，pcb打板，焊接元件，网络环境搭建，代码烧录等工作。</p>
-    <img class="image" src="@/assets/AIGF.jpg" alt="ESP32 AI女友项目实物图" />
+    <img class="image" src="@/assets/pictures/mcus/AIGF.jpg" alt="ESP32 AI女友项目实物图" />
     <h3>嘉立创示波器项目</h3>
     <p>
       参考开源设计，复刻了嘉立创示波器硬件项目。项目包含信号采集、显示模块等功能，能够实现基本的波形显示与分析。
@@ -88,7 +88,7 @@
       我在该项目复刻中主要做了物料采购，PCB打板，焊接元件，代码烧录等工作，进一步提升了对信号处理和硬件调试的理解。
     </p>
 
-    <img class="image" src="@/assets/waveshower.jpg" alt="嘉立创示波器项目实物图" />
+    <img class="image" src="@/assets/pictures/mcus/waveshower.jpg" alt="嘉立创示波器项目实物图" />
   </div>
 </template>
 
