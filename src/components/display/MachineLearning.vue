@@ -234,8 +234,6 @@
     <h4>一、实验基本信息</h4>
     <ul>
       <li><strong>实验名称：</strong>线性回归</li>
-      <li><strong>实验者：</strong>罗鹏程</li>
-      <li><strong>学号：</strong>2022112510</li>
       <li>
         <strong>实验目的：</strong
         >理解线性回归模型原理，掌握其建模与预测方法，学会拟合问题的模型评估方式。
