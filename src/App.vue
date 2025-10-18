@@ -187,6 +187,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import { nextTick } from 'vue'
 const showAside = ref(true)
 const currentMenuTitle = ref("PengCheng Luo's Personal Web")
 
@@ -204,6 +205,22 @@ function toggleSidebar() {
   showAside.value = !showAside.value
   // 这里可以加你的侧边栏显示/隐藏逻辑
 }
+// 路由跳转前显示 loading 动画
+router.beforeEach((to, from, next) => {
+  isLoading.value = true // 显示 loading 动画
+  next() // 继续跳转
+})
+// 路由跳转后隐藏 loading 动画
+router.afterEach(async () => {
+  // 等待页面资源加载完成
+  // 等待 Vue DOM 渲染完成
+  await nextTick()
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      isLoading.value = false
+    }, 300) // 延迟 300ms，避免闪烁
+  })
+})
 const handleMenuSelect = (index: string) => {
   isLoading.value = true // 开始显示 loading 动画
   try {
@@ -239,9 +256,9 @@ const handleMenuSelect = (index: string) => {
   } catch (error) {
     console.error('Navigation error:', error)
   } finally {
-    setTimeout(() => {
-      isLoading.value = false // 跳转完成后隐藏 loading 动画
-    }, 300) // 确保 loading 至少显示 300ms
+    // setTimeout(() => {
+    //   isLoading.value = false // 跳转完成后隐藏 loading 动画
+    // }, 300) // 确保 loading 至少显示 300ms
   }
 }
 
